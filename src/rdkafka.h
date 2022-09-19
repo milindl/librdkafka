@@ -4880,7 +4880,7 @@ struct rd_kafka_group_list {
  *           group list.
  *
  * @sa Use rd_kafka_group_list_destroy() to release list memory.
- * 
+ *
  * @deprecated Use rd_kafka_describe_consumer_groups() instead.
  */
 RD_EXPORT
@@ -5610,7 +5610,7 @@ rd_kafka_event_DeleteAcls_result(rd_kafka_event_t *rkev);
  *   RD_KAFKA_EVENT_ALTERCONSUMERGROUPOFFSETS_RESULT
  */
 RD_EXPORT const rd_kafka_AlterConsumerGroupOffsets_result_t *
-rd_kafka_event_AlterConsumerGroupOffsets_result (rd_kafka_event_t *rkev);
+rd_kafka_event_AlterConsumerGroupOffsets_result(rd_kafka_event_t *rkev);
 
 /**
  * @brief Get ListConsumerGroupOffsets result.
@@ -5622,7 +5622,7 @@ rd_kafka_event_AlterConsumerGroupOffsets_result (rd_kafka_event_t *rkev);
  *   RD_KAFKA_EVENT_LISTCONSUMERGROUPOFFSETS_RESULT
  */
 RD_EXPORT const rd_kafka_ListConsumerGroupOffsets_result_t *
-rd_kafka_event_ListConsumerGroupOffsets_result (rd_kafka_event_t *rkev);
+rd_kafka_event_ListConsumerGroupOffsets_result(rd_kafka_event_t *rkev);
 
 /**
  * @brief Poll a queue for an event for max \p timeout_ms.
@@ -6481,7 +6481,7 @@ typedef enum rd_kafka_admin_op_t {
         RD_KAFKA_ADMIN_OP_ALTERCONSUMERGROUPOFFSETS,
         /** ListConsumerGroupOffsets */
         RD_KAFKA_ADMIN_OP_LISTCONSUMERGROUPOFFSETS,
-        RD_KAFKA_ADMIN_OP__CNT          /**< Number of ops defined */
+        RD_KAFKA_ADMIN_OP__CNT /**< Number of ops defined */
 } rd_kafka_admin_op_t;
 
 /**
@@ -7696,7 +7696,7 @@ rd_kafka_AclOperation_name(rd_kafka_AclOperation_t acl_operation);
 
 /*! Represents consumer group committed offsets to be altered. */
 typedef struct rd_kafka_AlterConsumerGroupOffsets_s
-rd_kafka_AlterConsumerGroupOffsets_t;
+    rd_kafka_AlterConsumerGroupOffsets_t;
 
 /**
  * @brief Create a new AlterConsumerGroupOffsets object.
@@ -7711,27 +7711,25 @@ rd_kafka_AlterConsumerGroupOffsets_t;
  *          object when done.
  */
 RD_EXPORT rd_kafka_AlterConsumerGroupOffsets_t *
-rd_kafka_AlterConsumerGroupOffsets_new (const char *group,
-                                        const rd_kafka_topic_partition_list_t
-                                        *partitions);
+rd_kafka_AlterConsumerGroupOffsets_new(
+    const char *group,
+    const rd_kafka_topic_partition_list_t *partitions);
 
 /**
  * @brief Destroy and free a AlterConsumerGroupOffsets object previously
  *        created with rd_kafka_AlterConsumerGroupOffsets_new()
  */
-RD_EXPORT void
-rd_kafka_AlterConsumerGroupOffsets_destroy (
-        rd_kafka_AlterConsumerGroupOffsets_t *alter_grpoffsets);
+RD_EXPORT void rd_kafka_AlterConsumerGroupOffsets_destroy(
+    rd_kafka_AlterConsumerGroupOffsets_t *alter_grpoffsets);
 
 /**
  * @brief Helper function to destroy all AlterConsumerGroupOffsets objects in
  *        the \p alter_grpoffsets array (of \p alter_grpoffsets_cnt elements).
  *        The array itself is not freed.
  */
-RD_EXPORT void
-rd_kafka_AlterConsumerGroupOffsets_destroy_array (
-        rd_kafka_AlterConsumerGroupOffsets_t **alter_grpoffsets,
-        size_t alter_grpoffset_cnt);
+RD_EXPORT void rd_kafka_AlterConsumerGroupOffsets_destroy_array(
+    rd_kafka_AlterConsumerGroupOffsets_t **alter_grpoffsets,
+    size_t alter_grpoffset_cnt);
 
 /**
  * @brief Alter committed offsets for a set of partitions in a conusmer
@@ -7752,12 +7750,12 @@ rd_kafka_AlterConsumerGroupOffsets_destroy_array (
  * @remark The current implementation only supports one group per invocation.
  */
 RD_EXPORT
-void rd_kafka_AlterConsumerGroupOffsets (
-        rd_kafka_t *rk,
-        rd_kafka_AlterConsumerGroupOffsets_t **alter_grpoffsets,
-        size_t alter_grpoffsets_cnt,
-        const rd_kafka_AdminOptions_t *options,
-        rd_kafka_queue_t *rkqu);
+void rd_kafka_AlterConsumerGroupOffsets(
+    rd_kafka_t *rk,
+    rd_kafka_AlterConsumerGroupOffsets_t **alter_grpoffsets,
+    size_t alter_grpoffsets_cnt,
+    const rd_kafka_AdminOptions_t *options,
+    rd_kafka_queue_t *rkqu);
 
 
 
@@ -7774,9 +7772,9 @@ void rd_kafka_AlterConsumerGroupOffsets (
  * @param cntp is updated to the number of elements in the array.
  */
 RD_EXPORT const rd_kafka_group_result_t **
-rd_kafka_AlterConsumerGroupOffsets_result_groups (
-        const rd_kafka_AlterConsumerGroupOffsets_result_t *result,
-        size_t *cntp);
+rd_kafka_AlterConsumerGroupOffsets_result_groups(
+    const rd_kafka_AlterConsumerGroupOffsets_result_t *result,
+    size_t *cntp);
 
 
 
@@ -7791,7 +7789,7 @@ rd_kafka_AlterConsumerGroupOffsets_result_groups (
 
 /*! Represents consumer group committed offsets to be listed. */
 typedef struct rd_kafka_ListConsumerGroupOffsets_s
-rd_kafka_ListConsumerGroupOffsets_t;
+    rd_kafka_ListConsumerGroupOffsets_t;
 
 /**
  * @brief Create a new ListConsumerGroupOffsets object.
@@ -7806,27 +7804,25 @@ rd_kafka_ListConsumerGroupOffsets_t;
  *          object when done.
  */
 RD_EXPORT rd_kafka_ListConsumerGroupOffsets_t *
-rd_kafka_ListConsumerGroupOffsets_new (const char *group,
-                                       const rd_kafka_topic_partition_list_t
-                                       *partitions);
+rd_kafka_ListConsumerGroupOffsets_new(
+    const char *group,
+    const rd_kafka_topic_partition_list_t *partitions);
 
 /**
  * @brief Destroy and free a ListConsumerGroupOffsets object previously
  *        created with rd_kafka_ListConsumerGroupOffsets_new()
  */
-RD_EXPORT void
-rd_kafka_ListConsumerGroupOffsets_destroy (
-        rd_kafka_ListConsumerGroupOffsets_t *list_grpoffsets);
+RD_EXPORT void rd_kafka_ListConsumerGroupOffsets_destroy(
+    rd_kafka_ListConsumerGroupOffsets_t *list_grpoffsets);
 
 /**
  * @brief Helper function to destroy all ListConsumerGroupOffsets objects in
  *        the \p list_grpoffsets array (of \p list_grpoffsets_cnt elements).
  *        The array itself is not freed.
  */
-RD_EXPORT void
-rd_kafka_ListConsumerGroupOffsets_destroy_array (
-        rd_kafka_ListConsumerGroupOffsets_t **list_grpoffsets,
-        size_t list_grpoffset_cnt);
+RD_EXPORT void rd_kafka_ListConsumerGroupOffsets_destroy_array(
+    rd_kafka_ListConsumerGroupOffsets_t **list_grpoffsets,
+    size_t list_grpoffset_cnt);
 
 /**
  * @brief List committed offsets for a set of partitions in a conusmer
@@ -7846,12 +7842,12 @@ rd_kafka_ListConsumerGroupOffsets_destroy_array (
  * @remark The current implementation only supports one group per invocation.
  */
 RD_EXPORT
-void rd_kafka_ListConsumerGroupOffsets (
-        rd_kafka_t *rk,
-        rd_kafka_ListConsumerGroupOffsets_t **list_grpoffsets,
-        size_t list_grpoffsets_cnt,
-        const rd_kafka_AdminOptions_t *options,
-        rd_kafka_queue_t *rkqu);
+void rd_kafka_ListConsumerGroupOffsets(
+    rd_kafka_t *rk,
+    rd_kafka_ListConsumerGroupOffsets_t **list_grpoffsets,
+    size_t list_grpoffsets_cnt,
+    const rd_kafka_AdminOptions_t *options,
+    rd_kafka_queue_t *rkqu);
 
 
 
@@ -7868,9 +7864,9 @@ void rd_kafka_ListConsumerGroupOffsets (
  * @param cntp is updated to the number of elements in the array.
  */
 RD_EXPORT const rd_kafka_group_result_t **
-rd_kafka_ListConsumerGroupOffsets_result_groups (
-        const rd_kafka_ListConsumerGroupOffsets_result_t *result,
-        size_t *cntp);
+rd_kafka_ListConsumerGroupOffsets_result_groups(
+    const rd_kafka_ListConsumerGroupOffsets_result_t *result,
+    size_t *cntp);
 
 
 
