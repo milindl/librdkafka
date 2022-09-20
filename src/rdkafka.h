@@ -4894,9 +4894,6 @@ rd_kafka_list_groups(rd_kafka_t *rk,
 /**
  * @brief List client groups in cluster.
  *
- * \p group is an optional group name to list, otherwise (\p NULL) all
- * groups are returned.
- *
  * \p timeout_ms is the (approximate) maximum time to wait for response
  * from brokers and must be a positive value.
  *
@@ -4921,15 +4918,16 @@ rd_kafka_list_groups(rd_kafka_t *rk,
 RD_EXPORT
 rd_kafka_resp_err_t
 rd_kafka_list_consumer_groups(rd_kafka_t *rk,
-                              const char *group,
                               const struct rd_kafka_group_list **grplistp,
                               int timeout_ms);
 
 /**
  * @brief List and describe client groups in cluster.
  *
- * \p group is an optional group name to describe, otherwise (\p NULL) all
- * groups are returned.
+ * \p groups is an optional array of group names to describe, otherwise (\p
+ * NULL) all groups are returned.
+ *
+ * \p group_cnt corresponds to the number of groups in \p groups parameter.
  *
  * \p timeout_ms is the (approximate) maximum time to wait for response
  * from brokers and must be a positive value.
@@ -4955,7 +4953,8 @@ rd_kafka_list_consumer_groups(rd_kafka_t *rk,
 RD_EXPORT
 rd_kafka_resp_err_t
 rd_kafka_describe_consumer_groups(rd_kafka_t *rk,
-                                  const char *group,
+                                  const char **groups,
+                                  size_t group_cnt,
                                   const struct rd_kafka_group_list **grplistp,
                                   int timeout_ms);
 
