@@ -1,9 +1,13 @@
-# librdkafka v1.9.3
+# librdkafka v1.10.0
 
-librdkafka v1.9.3 is a maintenance release:
+librdkafka v1.10.0 is a feature release:
 
  * Self-contained static libraries can now be built on Linux arm64.
  * Fixes to the transactional and idempotent producer (#3971).
+ * [KIP-88](https://cwiki.apache.org/confluence/display/KAFKA/KIP-88%3A+OffsetFetch+Protocol+Update) OffsetFetch Protocol Update (#3995).
+ * [KIP-222](https://cwiki.apache.org/confluence/display/KAFKA/KIP-222+-+Add+Consumer+Group+operations+to+Admin+API) Add Consumer Group operations to Admin API (started by @lesterfan, #3995).
+ * [KIP-518](https://cwiki.apache.org/confluence/display/KAFKA/KIP-518%3A+Allow+listing+consumer+groups+per+state) Allow listing consumer groups per state (#3995).
+ * [KIP-396](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=97551484) Partially implemented: support for AlterConsumerGroupOffsets (started by @lesterfan, #3995).
 
 
 ## Fixes
