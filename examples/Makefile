@@ -4,6 +4,7 @@ EXAMPLES ?= rdkafka_example rdkafka_performance rdkafka_example_cpp \
 	producer consumer idempotent_producer transactions \
 	delete_records \
 	list_consumer_group_offsets \
+	list_consumer_groups \
 	alter_consumer_group_offsets \
 	openssl_engine_example_cpp \
 	misc
@@ -63,6 +64,10 @@ delete_records: ../src/librdkafka.a delete_records.c
 		../src/librdkafka.a $(LIBS)
 
 list_consumer_group_offsets: ../src/librdkafka.a list_consumer_group_offsets.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) $@.c -o $@ $(LDFLAGS) \
+		../src/librdkafka.a $(LIBS)
+
+list_consumer_groups: ../src/librdkafka.a list_consumer_groups.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) $@.c -o $@ $(LDFLAGS) \
 		../src/librdkafka.a $(LIBS)
 
