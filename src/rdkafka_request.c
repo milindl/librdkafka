@@ -2226,6 +2226,8 @@ rd_kafka_resp_err_t rd_kafka_MetadataRequest(rd_kafka_broker_t *rkb,
         rkbuf->rkbuf_u.Metadata.reason      = rd_strdup(reason);
         rkbuf->rkbuf_u.Metadata.cgrp_update = cgrp_update;
 
+        fprintf(stderr, "MILIND::rkbuf length before writing: %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
+
         /* TopicArrayCnt */
         of_TopicArrayCnt = rd_kafka_buf_write_arraycnt_pos(rkbuf);
 
@@ -2249,6 +2251,9 @@ rd_kafka_resp_err_t rd_kafka_MetadataRequest(rd_kafka_broker_t *rkb,
                 if (ApiVersion >= 1 && ApiVersion < 9) {
                         /* v1-8: update to -1, all topics */
                         rd_kafka_buf_update_i32(rkbuf, of_TopicArrayCnt, -1);
+                } else {
+                        // rd_kafka_buf_finalize_arraycnt(rkbuf, of_TopicArrayCnt,
+                        //                                -1);
                 }
                 /* v9+: keep 0, varint encoded null, all topics */
 
@@ -2272,6 +2277,8 @@ rd_kafka_resp_err_t rd_kafka_MetadataRequest(rd_kafka_broker_t *rkb,
                            "%s",
                            topic_cnt, reason);
         }
+
+        fprintf(stderr, "MILIND::rkbuf length after writing topics length: %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
 
         if (full_incr) {
                 /* Avoid multiple outstanding full requests
@@ -2315,6 +2322,9 @@ rd_kafka_resp_err_t rd_kafka_MetadataRequest(rd_kafka_broker_t *rkb,
                 }
         }
 
+        fprintf(stderr, "MILIND::rkbuf length after writing topics: %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
+
+
         if (ApiVersion >= 4) {
                 /* AllowAutoTopicCreation */
                 rd_kafka_buf_write_bool(rkbuf, allow_auto_create_topics);
@@ -2333,27 +2343,36 @@ rd_kafka_resp_err_t rd_kafka_MetadataRequest(rd_kafka_broker_t *rkb,
                            "requested topic(s) may be auto created depending "
                            "on broker auto.create.topics.enable configuration");
         }
+        fprintf(stderr, "MILIND::rkbuf length after writing allow_auto_create_topics: %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
 
         if (ApiVersion >= 8 && ApiVersion < 10) {
                 /* TODO: implement KIP-430 */
                 /* IncludeClusterAuthorizedOperations */
                 rd_kafka_buf_write_bool(rkbuf, rd_false);
         }
+        fprintf(stderr, "MILIND::rkbuf length after writing IncludeClusterAuthorizedOperations: %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
+
 
         if (ApiVersion >= 8) {
                 /* TODO: implement KIP-430 */
                 /* IncludeTopicAuthorizedOperations */
                 rd_kafka_buf_write_bool(rkbuf, rd_false);
         }
+        fprintf(stderr, "MILIND::rkbuf length after writing IncludeTopicAuthorizedOperations: %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
+
 
         /* Tags for the request */
         rd_kafka_buf_write_tags(rkbuf);
+        fprintf(stderr, "MILIND::rkbuf length after writing Tags: %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
+
 
         rd_kafka_buf_ApiVersion_set(rkbuf, ApiVersion, 0);
 
         /* Metadata requests are part of the important control plane
          * and should go before most other requests (Produce, Fetch, etc). */
         rkbuf->rkbuf_prio = RD_KAFKA_PRIO_HIGH;
+
+        fprintf(stderr, "MILIND::Enqueing metadata buffer with topic cnt %d and topic %p and  size %d\n", topic_cnt, topics, rd_buf_len(&rkbuf->rkbuf_buf) - 4);
 
         rd_kafka_broker_buf_enq_replyq(rkb, rkbuf,
                                        /* Handle response thru rk_ops,

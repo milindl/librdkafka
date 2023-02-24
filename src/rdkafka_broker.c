@@ -1031,6 +1031,7 @@ static void rd_kafka_broker_buf_enq0(rd_kafka_broker_t *rkb,
                                      rd_kafka_buf_t *rkbuf) {
         rd_ts_t now;
 
+        fprintf(stderr, "MILIND::rd_kafka_broker_buf_enq0 buffer size = %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
         rd_kafka_assert(rkb->rkb_rk, thrd_is_current(rkb->rkb_thread));
 
         if (rkb->rkb_rk->rk_conf.sparse_connections &&
@@ -1094,6 +1095,8 @@ static void rd_kafka_broker_buf_enq0(rd_kafka_broker_t *rkb,
 static void rd_kafka_buf_finalize(rd_kafka_t *rk, rd_kafka_buf_t *rkbuf) {
         size_t totsize;
 
+        fprintf(stderr, "MILIND::PreFinalizing buffer of size %d\n", rd_buf_len(&rkbuf->rkbuf_buf) - 4);
+
         rd_assert(!(rkbuf->rkbuf_flags & RD_KAFKA_OP_F_NEED_MAKE));
 
         if (rkbuf->rkbuf_flags & RD_KAFKA_OP_F_FLEXVER) {
@@ -1112,6 +1115,8 @@ static void rd_kafka_buf_finalize(rd_kafka_t *rk, rd_kafka_buf_t *rkbuf) {
          */
         /* Total request length */
         rd_kafka_buf_update_i32(rkbuf, 0, (int32_t)totsize);
+
+        fprintf(stderr, "MILIND::Finalizing buffer of size %d\n", totsize);
 
         /* ApiVersion */
         rd_kafka_buf_update_i16(rkbuf, 4 + 2, rkbuf->rkbuf_reqhdr.ApiVersion);

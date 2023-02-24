@@ -173,6 +173,8 @@ rd_kafka_buf_t *rd_kafka_buf_new_request0(rd_kafka_broker_t *rkb,
                 rd_kafka_buf_write_i8(rkbuf, 0);
         }
 
+        fprintf(stderr, "MILIND::length after header %d\n", rd_buf_len(&rkbuf->rkbuf_buf));
+
         return rkbuf;
 }
 
